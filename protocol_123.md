@@ -190,7 +190,7 @@ game_id = 0x6E 0x73 0x65 0xD9 0xFF 0xC4 0x6E 0x48 0x8D 0x7C 0xA1 0x92 0x31 0x34 
 game_id = 0x46 0xC9 0x67 0xC8 0xAC 0xF2 0x44 0x4D 0xB8 0xB1 0xEC 0xEE 0xD4 0xD5 0x40 0x4A
 ```
 
-*The game ids for both with and without Sokuroll are the same, and indeed a player without SWR with Sokuroll can connect to a peer without SWR with Sokuroll, and the game clients will freeze because of an incompatibility.*
+*The game ids when not using SWR for both with and without Sokuroll are the same, and indeed a player without SWR with Sokuroll can connect to a peer without SWR without Sokuroll, and the game clients will freeze because of an incompatibility.*
 
 ##### INIT_REQUEST when starting a game session for playing
 
