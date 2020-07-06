@@ -23,7 +23,7 @@ The client can only have at most one child, which is the first spectator.
 
 All spectators can have at most 4 children, which are all spectators.
 
-When a redirects a game client to one of its children, it always redirects it to the one with the fewest nodes in it subtree, and it multiple nodes are identical it redirects it to the older one.
+When a game client redirects another game client to one of its children, it always redirects it to the one with the fewest nodes in it subtree, and it multiple nodes are identical it redirects it to the older one.
 
 A typical game tree can look like this (host, client, spectator shortened to H, C, S):
 ```
@@ -215,14 +215,19 @@ INIT_SUCCESS is sent in response to an INIT_REQUEST packet when the parent accep
 *This does mean that if the initial packet is dropped due to packet loss, this information will never be received. And indeed, with packet loss, the official game client may never receive the profile names and show an empty profile name instead.*
 
 ```
-init_success = 0x06 <stuff> <data_first|data_additional>
-stuff = <stuff_1> <data_size> <stuff_2>
-stuff_1 = 0x00 0x00 0x00 0x00 0x10 0x00 0x00 0x00
-data_size = { 1 byte }
+init_success = 0x06 <stuff_1> <padding_1> <stuff_2> <padding_2> <spectate_info> <data_size> <padding_3> <data_first|data_additional>
+stuff_1 = 0x00
+padding_1 = { 1 byte: padding, ignored }
 stuff_2 = 0x00 0x00
+padding_2 = { 2 bytes: padding, ignored }
+spectate_info = { 4 bytes: unsigned little-endian }
+data_size = { 2 bytes: unsigned little-endian }
+padding_3 = { 2 bytes: padding, ignored }
 ```
 
-`data_size` is the size in bytes of either `data_accept` or `data_additional`.
+`spectate_info` is `0x00` if spectating is not allowed, `0x10` if spectating is allowed, `0x11` if spectating is allowed and this packet is sent to a spectator.
+
+`data_size` is the size in bytes of either `data_first` or `data_additional`.
 
 ##### INIT_SUCCESS when a peer first accepts a game session
 
