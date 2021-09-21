@@ -83,7 +83,7 @@ HELLO packets are sent in two different cases:
 ```
 hello = 0x01 <peer_address(sockaddr_in)> <target_address(sockaddr_in)> <stuff>
 sockaddr_in = 0x02 0x00 <port> <addr> <padding>
-port = { 2 bytes: unsigned little-endian short }
+port = { 2 bytes: unsigned big-endian short }
 addr = { 4 bytes: IPv4 address bytes in network order }
 padding = { 8 bytes: padding, ignored }
 stuff = 0x00 0x00 0x00 0xBC // unknown
@@ -113,7 +113,7 @@ PUNCH packets are sent after receiving HELLO packets when those are used for est
 ```
 punch = 0x02 <address(sockaddr_in)> <stuff>
 sockaddr_in = 0x02 0x00 <port> <addr> <padding>
-port = { 2 bytes: unsigned little-endian short }
+port = { 2 bytes: unsigned big-endian short }
 addr = { 4 bytes: IPv4 address bytes in network order }
 padding = { 8 bytes: padding, ignored }
 stuff = 0x00 0x00 0x00 0x00 // unknown
@@ -272,7 +272,7 @@ REDIRECT packets are sent in response to HELLO packets when the receiving peer w
 redirect = 0x08 <child_id> <target_address(sockaddr_in)> <stuff>
 child_id = { 4 bytes: unsigned little-endian }
 sockaddr_in = 0x02 0x00 <port> <addr> <padding>
-port = { 2 bytes: unsigned little-endian short }
+port = { 2 bytes: unsigned big-endian short }
 addr = { 4 bytes: IPv4 address bytes in network order }
 padding = { 8 bytes: padding, ignored }
 stuff = { 48 bytes } // unknown
